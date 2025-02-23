@@ -1,0 +1,28 @@
+# Логи
+*.log
+*.out
+
+# Временные файлы
+*.tmp
+*.swp
+*.bak
+
+# Папки сборки
+node_modules/
+build/
+dist/
+
+# Папки IDE
+.idea/
+.vscode/
+
+# Файлы настроек
+*.env
+*.env.local
+
+# WooCommerce
+wp-content/uploads/
+
+# Темы и плагины WordPress
+wp-content/themes/*/.gitignore
+wp-content/plugins/*/.gitignore
