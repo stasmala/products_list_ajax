@@ -35,6 +35,7 @@ function cas_get_products(WP_REST_Request $request) {
             $products[] = [
                 'id'        => get_the_ID(),
                 'title'     => get_the_title(),
+                'short_description' => wp_strip_all_tags(get_the_excerpt()),
                 'price'     => $product->get_price(),
                 'thumbnail' => get_the_post_thumbnail_url(get_the_ID(), 'medium'),
                 'link'      => get_permalink(),
@@ -72,6 +73,24 @@ function cas_get_categories() {
     return rest_ensure_response($result);
 }
 
+// Функция для очистки корзины
+function cas_clear_cart(WP_REST_Request $request) {
+    if ( ! WC()->session ) {
+        WC()->initialize_session();
+    }
+
+    if ( WC()->session ) {
+        // Сбросить корзину, очищая все товары в сессии
+        WC()->session->__unset( 'cart' );
+        WC()->session->set( 'cart', [] ); // Создаем пустой массив
+    }
+
+    return rest_ensure_response([
+        'success' => true,
+        'message' => 'Корзина очищена'
+    ]);
+}
+
 // Регистрация маршрутов API
 add_action('rest_api_init', function () {
     register_rest_route('api/v1', '/products/', [
@@ -84,5 +103,12 @@ add_action('rest_api_init', function () {
         'methods'  => 'GET',
         'callback' => 'cas_get_categories',
         'permission_callback' => '__return_true',
+    ]);
+
+    // Маршрут для очистки корзины
+    register_rest_route('api/v1', '/clear-cart/', [
+        'methods'  => 'POST',
+        'callback' => 'cas_clear_cart',
+        'permission_callback' => '__return_true',  // Убедитесь, что у вас есть нужные права
     ]);
 });

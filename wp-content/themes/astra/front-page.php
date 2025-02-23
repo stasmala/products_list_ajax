@@ -28,10 +28,17 @@
             <p><?php _e( 'Загрузка...', 'text_loading' ); ?></p>
         </div>
 
-        <button id="scroll-top">
-            ↑
-        </button>
+<!--        <button id="scroll-top">-->
+<!--            ↑-->
+<!--        </button>-->
     </main>
+</div>
+
+<div id="cookie-consent" class="cookie-consent-popup">
+    <div class="cookie-consent-content">
+        <p>Мы используем куки для улучшения работы сайта. Нажимая "Принять", вы соглашаетесь на использование куки.</p>
+        <button id="accept-cookies">Принять</button>
+    </div>
 </div>
 
 <?php get_footer(); ?>
